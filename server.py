@@ -1,28 +1,17 @@
-import socket, sys, time # Imprdib mooduli
+import socket # Impordib socket mooduli
 
+s = socket.socket() # Loob socket objekti
+host = socket.gethostname() # Otsib hostnamei
+port = 8080 # port on 8080
+s.bind((host,port)) # saab serveri aadressi ja porti
+s.listen(1) # kuulab kasutajat
+print(host) # kontrollib, kas hostname on olemas
+print("Waiting for any incoming connections ... ") # kontrollib, kas kasutaja on ühendatud
+conn, addr = s.accept() # kuulab kasutajat
+print(addr, "Has connected to the server") # kontrollib, kas kasutaja on ühendatud
 
-s=socket.socket() # Loob socket objekti
-host=socket.gethostname() # Hosti nimi loob
-port=8080 # Port
-s.bind((host,port)) # Bindi host ja port
-print('') # Prindib rea
-print(host)
-print("")
-print('[+] Server started on port ' + str(port)) # Prindib serveri pordi
-print('')  # Prindib rea
-print('server is waiting for connection...') # Prindib serveri ühendamise ootamise teate
-print('')  # Prindib rea
-s.listen(1) # Loob serveri kuulamise
-c, addr = s.accept() # Aksepteerib kliendi
-print('[+] Got connection from ' + str(addr)) # Prindib kliendi aadressi
-print('')  # Prindib rea
-while 1:
-    message = input(str('>> ')) # Küsib sõnumit
-    message = message.encode() # Kodeerib sõnumi
-    c.send(message) # Saadab kliendile sõnumi
-    print('[+] Message sent') # Prindib sõnumi saatmise teate
-    print('')  # Prindib rea
-    incoming_message = c.recv(1024) # saab kliendilt sõnumit
-    incoming_message = incoming_message.decode() # Dekodeerib sõnum
-    print('[+] Message received: ' + incoming_message) # Prindib sõnumi
-    print('')  # Prindib rea
+filename = input(str("Please enter the filename of the file : ")) # küsib kasutajalt failinime
+file = open(filename , 'rb') # avab faili
+file_data = file.read(1024) # loeb faili
+conn.send(file_data) # saadab faili
+print("Data has been transmitted successfully") # kontrollib, kas fail on edukalt saadetud

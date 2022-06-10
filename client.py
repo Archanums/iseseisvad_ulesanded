@@ -1,18 +1,13 @@
-import socket,sys,time
+import socket # Impordib socket mooduli
+s = socket.socket() # Loob socket objekti
+host = input(str("Sisestage saatja hosti aadress : ")) # host = "
+port = 8080 # port on 8080
+s.connect((host,port)) #saab serveri aadressi ja porti
+print("Ühendatud ... ") # kontrollib, kas ühendus on loodud
 
-
-s=socket.socket() # Loob socket objekti
-host=input('Enter host: ') # sisesta hosti nimi
-port=8080 # määrab pordi
-s.connect((host,port)) # ühendab hostiga
-print('Connected to ' + host + ' on port ' + str(port)) # Prindib ühenduse teate
-while 1:
-    incoming_message = s.recv(1024) # saab kliendilt sõnumi
-    incoming_message = incoming_message.decode() # Dekodeerib sõnum
-    print('[+] Message received: ' + incoming_message) # Prindib sõnumi
-    print('')  # Prindib rea
-    message = input(str('>> ')) # Küsib klientilt sõnumit
-    message = message.encode() # Kodeerib sõnumi
-    s.send(message) # Saadab kliendi sõnumi
-    print('[+] Message sent') # Prindib sõnumi saatmise teate
-    print('')  # Prindib rea
+filename = input(str("Sisestage sissetuleva faili failinimi : "))
+file = open(filename, 'wb') # avab faili
+file_data = s.recv(1024) # saadab faili
+file.write(file_data) # kirjutab faili
+file.close() # sulgeb faili
+print("Fail on edukalt vastu võetud.")
